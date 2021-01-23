@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Service{% endblock %}
+
+{% block body %}
+    <h1>Create new Service</h1>
+
+    {{ include('service/_form.html.twig') }}
+
+    <a href="{{ path('service_index') }}">back to list</a>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('asset/js/images.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        addImageFrom($('#service_images'), $newImage);
+    })
+    </script>
+{% endblock %}

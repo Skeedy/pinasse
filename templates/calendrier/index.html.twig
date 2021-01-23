@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CalendrierController!{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('asset/css/calendar.css') }}">
+{%  endblock %}
+{% block body %}
+    <div id="calendar">
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('asset/js/fullcalendar.min.js') }}"></script>
+    <script>
+
+        window.onload = () => {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'fr',
+                timeZone: 'Europe/Paris',
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth, timeGridWeek'
+                },
+                events : {{ data|raw }},
+                editable : true,
+                eventResizableFromStart: true,
+
+            });
+            calendar.on('eventChange', (e) =>{
+                let url = `/admin/calendar/api/${e.event.id}/edit`;
+                let datas = {
+                    'title' : e.event.title,
+                    'description' : e.event.extendedProps.description,
+                    'start': e.event.start,
+                    'end': e.event.end,
+                    'border': e.event.borderColor,
+                    'background': e.event.backgroundColor,
+                    'color': e.event.textColor,
+                    'allDay': e.event.allDay,
+                }
+                console.log(datas);
+                let xhr = new XMLHttpRequest()
+                xhr.open('PUT', url);
+                xhr.send(JSON.stringify(datas));
+            })
+            calendar.render();
+        };
+
+    </script>
+{% endblock %}

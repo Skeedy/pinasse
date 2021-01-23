@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('asset/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
+        {% block stylesheets %}
+
+        {% endblock %}
+
+    </head>
+    <header>
+        <div class="float-end">
+        {% if not is_granted("IS_AUTHENTICATED_FULLY") %}
+        <a href="{{ path('app_login') }}"><button class="btn btn-info"> Login </button></a>
+        <a href="{{ path('app_register') }}"><button class="btn btn-info"> Register </button></a>
+            {% else %}
+            <a href="{{  path('app_logout') }}"><button class="btn btn-danger">Log out</button></a>
+        {% endif %}
+        </div>
+    </header>
+    <body>{% if is_granted("ROLE_ADMIN") %}
+        {% block admin%}
+            <nav class="sidebar">
+                <ul>
+
+                    <li>
+                        <a href=" {{ path('homepage') }}"> Retour </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('type_index') }}"> Liste des types de Service  </a>
+                    </li>
+                    <li>
+                        <a href=" {{ path('service_index') }}"> Liste des services</a>
+                    </li>
+                    <li>
+                        <a href=" {{ path('calendrier') }}">Calendrier</a>
+                    </li>
+                </ul>
+            </nav>
+            {% endblock %}
+    {% endif %}
+            <section class="main-page">
+                {% block body %}
+                    <div class="container">
+                        <h2> Bonjour {{ user.prenom }} {{ user.nom }}</h2>
+                    </div>
+                {% endblock %}
+            </section>
+
+    </body>
+    <script src="{{ asset('asset/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
+{% block javascripts %}
+
+
+{% endblock %}
+</html>

@@ -1,0 +1,26 @@
+nav.sidebar {
+    position: fixed;
+    height: 100vh;
+    background-color: #04414d;
+    color: #FFF;
+    width: 200px;
+    top: 0;
+    left: 0;
+}
+nav.sidebar ul li{
+    list-style: none;
+}
+nav.sidebar ul li a{
+    text-decoration: none;
+    color: #FFF;
+}
+nav.sidebar ul li a:hover{
+    text-decoration: none!important;
+}
+.main-page{
+    margin-left: 200px;
+}
+#calendar{
+    width: 80%;
+    margin: auto;
+}
